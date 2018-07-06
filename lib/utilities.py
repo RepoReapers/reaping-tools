@@ -226,7 +226,7 @@ def url_to_json(url, headers={}):
     try:
         response = urllib.request.urlopen(request)
 
-        raw_data = response.readall().decode('utf-8')
+        raw_data = response.read().decode('utf-8')
         result = json.loads(raw_data)
     except Exception as e:
         # TODO: Properly handle error. For now, just return empty dictionary.

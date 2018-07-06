@@ -71,14 +71,24 @@ class Run(object):
             if len([i for i in _rresults.values() if i is not None]) > 0:
                 updatable = True
                 _rresults.update(rresults)
-
+        # score calculated here has a bug
+        # it calculates score if the project 
+        # is already there in the reaper_results table
+        # but in absence gives zero score
         score = self.attributes.score(_rresults)
-        self._print_outcome(project_id, score)
 
         if self.attributes.is_persistence_enabled:
             if is_existing is True and updatable is False:
                 return
 
+            # calculating score again with new found values
+            # this will override zero score with actual score
+            # in prior function call
+            # for the projects that were not already 
+            # in the reaper_results table
+            score = self.attributes.score(rresults)
+            self._print_outcome(project_id, score)
+            
             columns = ('project_id', 'score')
             values = (project_id, score)
             for key in rresults:
@@ -86,7 +96,7 @@ class Run(object):
                     if rresults[key] is not None:
                         columns += (key,)
                         values += (rresults[key],)
-
+            
             if is_existing:
                 # Update
                 query = SQL_UPDATE.format(

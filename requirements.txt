@@ -1,4 +1,4 @@
-mysql-connector-python>=2.0.3,<3.0
+https://cdn.mysql.com/Downloads/Connector-Python/mysql-connector-python-2.0.4.zip#md5=3df394d89300db95163f17c843ef49df
 Pygments>=2.0.2,<3.0
 networkx>=1.9.1,<2.0
 APScheduler>=3.0.2,<4.0
